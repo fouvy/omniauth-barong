@@ -17,12 +17,19 @@ module OmniAuth
 
       option  :authorize_url, '/oauth/authorize'
       option  :raw_info_url
+      # add passing client locale language, and redirect action to oauth server
+      option  :authorize_params, { :locale => "en", :action => "new"}
 
       args [
           :client_id,
           :client_secret,
           :domain
       ]
+
+      def setup_phase
+	request.env['omniauth.strategy'].options[:authorize_params][:locale] =  request.params["locale"]
+	request.env['omniauth.strategy'].options[:authorize_params][:action] =  request.params["action"]
+      end
 
       def client
         options.client_options.site = domain_url
