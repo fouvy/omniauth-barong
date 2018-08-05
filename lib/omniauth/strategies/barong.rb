@@ -23,7 +23,8 @@ module OmniAuth
       args [
           :client_id,
           :client_secret,
-          :domain
+          :domain,
+	  :authorize_params
       ]
 
       def setup_phase
