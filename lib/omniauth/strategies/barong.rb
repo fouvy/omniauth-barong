@@ -28,8 +28,12 @@ module OmniAuth
       ]
 
       def setup_phase
-        request.env['omniauth.strategy'].options[:authorize_params][:locale] = request.params.has_key?("locale") ? request.params["locale"] : authorize_params[:locale]
-        request.env['omniauth.strategy'].options[:authorize_params][:after_action] = request.params.has_key?("after_action") ? request.params["after_action"] : authorize_params[:after_action]
+        if request.params.has_key?("locale")
+          request.env['omniauth.strategy'].options[:authorize_params][:locale] = request.params["locale"]
+        end
+        if request.params.has_key?("after_action")
+          request.env['omniauth.strategy'].options[:authorize_params][:after_action] = request.params["after_action"]
+        end
       end
 
       def client
